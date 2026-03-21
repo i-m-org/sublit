@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeviceTemplate, ImageConfig } from '../types';
+import { DeviceTemplate, ImageConfig, ThemeId } from '../types';
 import { SCALE_CONFIG } from '../constants';
 
 interface DevicePreviewProps {
@@ -10,6 +10,7 @@ interface DevicePreviewProps {
   onMouseDown: (e: React.MouseEvent) => void;
   onMouseMove: (e: React.MouseEvent) => void;
   onMouseUp: () => void;
+  theme?: ThemeId;
 }
 
 export const DevicePreview: React.FC<DevicePreviewProps> = ({
@@ -20,6 +21,7 @@ export const DevicePreview: React.FC<DevicePreviewProps> = ({
   onMouseDown,
   onMouseMove,
   onMouseUp,
+  theme = 'dark',
 }) => {
   const { pxPerMm } = SCALE_CONFIG;
   const deviceWidth = device.width * pxPerMm;

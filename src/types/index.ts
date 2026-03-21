@@ -39,3 +39,20 @@ export interface Position {
   x: number;
   y: number;
 }
+
+// ============================================
+// TIPOS DE TEMA
+// ============================================
+
+export interface Theme {
+  id: string;
+  name: string;
+  bgPrimary: string;
+  bgSecondary: string;
+  bgTertiary: string;
+  textPrimary: string;
+  textSecondary: string;
+  border: string;
+}
+
+export type ThemeId = 'dark' | 'white';

@@ -6,6 +6,64 @@ import { DeviceTemplate, ScaleConfig, ImageConfig } from '../types';
 // Fuentes: GSMArena, especificaciones oficiales de fabricantes
 
 export const DEVICE_TEMPLATES: DeviceTemplate[] = [
+  // --- SERIE iPhone 17 (2025) ---
+  { 
+    id: 'iphone-17', 
+    name: 'iPhone 17', 
+    brand: 'Apple',
+    width: 71.5, 
+    height: 147.5, 
+    cornerRadius: 12,
+    camera: { x: 8, y: 8, w: 28, h: 28, r: 6 }
+  },
+  { 
+    id: 'iphone-17-pro', 
+    name: 'iPhone 17 Pro', 
+    brand: 'Apple',
+    width: 71.4, 
+    height: 149.0, 
+    cornerRadius: 12,
+    camera: { x: 8, y: 8, w: 34, h: 34, r: 6 }
+  },
+  { 
+    id: 'iphone-17-pro-max', 
+    name: 'iPhone 17 Pro Max', 
+    brand: 'Apple',
+    width: 77.6, 
+    height: 163.5, 
+    cornerRadius: 12,
+    camera: { x: 8, y: 8, w: 38, h: 38, r: 8 }
+  },
+
+  // --- SERIE iPhone 16 (2024) ---
+  { 
+    id: 'iphone-16', 
+    name: 'iPhone 16', 
+    brand: 'Apple',
+    width: 71.6, 
+    height: 147.6, 
+    cornerRadius: 12,
+    camera: { x: 8, y: 8, w: 26, h: 26, r: 5 }
+  },
+  { 
+    id: 'iphone-16-pro', 
+    name: 'iPhone 16 Pro', 
+    brand: 'Apple',
+    width: 71.5, 
+    height: 149.6, 
+    cornerRadius: 12,
+    camera: { x: 8, y: 8, w: 33, h: 33, r: 6 }
+  },
+  { 
+    id: 'iphone-16-pro-max', 
+    name: 'iPhone 16 Pro Max', 
+    brand: 'Apple',
+    width: 77.6, 
+    height: 163.0, 
+    cornerRadius: 12,
+    camera: { x: 8, y: 8, w: 36, h: 36, r: 7 }
+  },
+
   // --- SERIE iPhone 15 (2023) ---
   { 
     id: 'iphone-15', 
@@ -44,62 +102,82 @@ export const DEVICE_TEMPLATES: DeviceTemplate[] = [
     camera: { x: 8, y: 8, w: 30, h: 30, r: 6 }
   },
 
-  // --- SERIE iPhone 16 (2024) ---
+  // --- SERIE iPhone 8 / 7 (Clásicos) ---
   { 
-    id: 'iphone-16', 
-    name: 'iPhone 16', 
+    id: 'iphone-8', 
+    name: 'iPhone 8', 
     brand: 'Apple',
-    width: 71.6, 
-    height: 147.6, 
-    cornerRadius: 12,
-    camera: { x: 8, y: 8, w: 26, h: 26, r: 5 }
+    width: 67.3, 
+    height: 138.4, 
+    cornerRadius: 8,
+    camera: { x: 28, y: 8, w: 10, h: 10, r: 5 }
   },
   { 
-    id: 'iphone-16-pro', 
-    name: 'iPhone 16 Pro', 
+    id: 'iphone-8-plus', 
+    name: 'iPhone 8 Plus', 
     brand: 'Apple',
-    width: 71.5, 
-    height: 149.6, 
-    cornerRadius: 12,
-    camera: { x: 8, y: 8, w: 33, h: 33, r: 6 }
+    width: 78.1, 
+    height: 158.4, 
+    cornerRadius: 8,
+    camera: { x: 32, y: 8, w: 12, h: 12, r: 6 }
   },
   { 
-    id: 'iphone-16-pro-max', 
-    name: 'iPhone 16 Pro Max', 
+    id: 'iphone-7', 
+    name: 'iPhone 7', 
     brand: 'Apple',
-    width: 77.6, 
-    height: 163.0, 
-    cornerRadius: 12,
-    camera: { x: 8, y: 8, w: 36, h: 36, r: 7 }
+    width: 67.1, 
+    height: 138.3, 
+    cornerRadius: 8,
+    camera: { x: 28, y: 8, w: 10, h: 10, r: 5 }
+  },
+  { 
+    id: 'iphone-7-plus', 
+    name: 'iPhone 7 Plus', 
+    brand: 'Apple',
+    width: 77.9, 
+    height: 158.2, 
+    cornerRadius: 8,
+    camera: { x: 32, y: 8, w: 12, h: 12, r: 6 }
   },
 
-  // --- SERIE Samsung Galaxy S24 (2024) ---
+  // --- SERIE iPhone 6 (Clásicos) ---
   { 
-    id: 'samsung-s24', 
-    name: 'Samsung Galaxy S24', 
-    brand: 'Samsung',
-    width: 70.9, 
-    height: 147.0, 
-    cornerRadius: 4,
-    camera: { x: 8, y: 8, w: 22, h: 40, r: 4 }
+    id: 'iphone-6', 
+    name: 'iPhone 6', 
+    brand: 'Apple',
+    width: 67.0, 
+    height: 138.1, 
+    cornerRadius: 8,
+    camera: { x: 26, y: 8, w: 10, h: 10, r: 5 }
   },
   { 
-    id: 'samsung-s24-plus', 
-    name: 'Samsung Galaxy S24+', 
-    brand: 'Samsung',
-    width: 75.9, 
-    height: 158.5, 
-    cornerRadius: 4,
-    camera: { x: 10, y: 10, w: 22, h: 44, r: 4 }
+    id: 'iphone-6s', 
+    name: 'iPhone 6s', 
+    brand: 'Apple',
+    width: 67.1, 
+    height: 138.3, 
+    cornerRadius: 8,
+    camera: { x: 26, y: 8, w: 10, h: 10, r: 5 }
   },
   { 
-    id: 'samsung-s24-ultra', 
-    name: 'Samsung Galaxy S24 Ultra', 
-    brand: 'Samsung',
-    width: 79.0, 
-    height: 162.3, 
-    cornerRadius: 4,
-    camera: { x: 10, y: 10, w: 25, h: 50, r: 5 }
+    id: 'iphone-6s-plus', 
+    name: 'iPhone 6s Plus', 
+    brand: 'Apple',
+    width: 77.9, 
+    height: 158.2, 
+    cornerRadius: 8,
+    camera: { x: 30, y: 8, w: 12, h: 12, r: 6 }
+  },
+
+  // --- SERIE iPhone SE ---
+  { 
+    id: 'iphone-se-2022', 
+    name: 'iPhone SE (2022)', 
+    brand: 'Apple',
+    width: 67.3, 
+    height: 138.4, 
+    cornerRadius: 8,
+    camera: { x: 30, y: 8, w: 8, h: 8, r: 4 }
   },
 
   // --- SERIE Samsung Galaxy S25 (2025) ---
@@ -131,24 +209,280 @@ export const DEVICE_TEMPLATES: DeviceTemplate[] = [
     camera: { x: 10, y: 10, w: 24, h: 48, r: 5 }
   },
 
-  // --- SERIE Google Pixel 8 (2023) ---
+  // --- SERIE Samsung Galaxy S24 (2024) ---
   { 
-    id: 'pixel-8', 
-    name: 'Google Pixel 8', 
-    brand: 'Google',
-    width: 70.8, 
-    height: 150.5, 
-    cornerRadius: 14,
-    camera: { x: 0, y: 15, w: 70.8, h: 25, r: 0 }
+    id: 'samsung-s24-fe', 
+    name: 'Samsung Galaxy S24 FE', 
+    brand: 'Samsung',
+    width: 77.3, 
+    height: 160.1, 
+    cornerRadius: 4,
+    camera: { x: 10, y: 10, w: 24, h: 38, r: 4 }
   },
   { 
-    id: 'pixel-8-pro', 
-    name: 'Google Pixel 8 Pro', 
-    brand: 'Google',
+    id: 'samsung-s24', 
+    name: 'Samsung Galaxy S24', 
+    brand: 'Samsung',
+    width: 70.9, 
+    height: 147.0, 
+    cornerRadius: 4,
+    camera: { x: 8, y: 8, w: 22, h: 40, r: 4 }
+  },
+  { 
+    id: 'samsung-s24-plus', 
+    name: 'Samsung Galaxy S24+', 
+    brand: 'Samsung',
+    width: 75.9, 
+    height: 158.5, 
+    cornerRadius: 4,
+    camera: { x: 10, y: 10, w: 22, h: 44, r: 4 }
+  },
+  { 
+    id: 'samsung-s24-ultra', 
+    name: 'Samsung Galaxy S24 Ultra', 
+    brand: 'Samsung',
+    width: 79.0, 
+    height: 162.3, 
+    cornerRadius: 4,
+    camera: { x: 10, y: 10, w: 25, h: 50, r: 5 }
+  },
+
+  // --- SERIE Samsung Galaxy A (2024) ---
+  { 
+    id: 'samsung-a55', 
+    name: 'Samsung Galaxy A55', 
+    brand: 'Samsung',
+    width: 77.4, 
+    height: 161.1, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 24, h: 38, r: 4 }
+  },
+  { 
+    id: 'samsung-a35', 
+    name: 'Samsung Galaxy A35', 
+    brand: 'Samsung',
+    width: 78.0, 
+    height: 161.7, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 24, h: 38, r: 4 }
+  },
+  { 
+    id: 'samsung-a15', 
+    name: 'Samsung Galaxy A15', 
+    brand: 'Samsung',
+    width: 76.8, 
+    height: 160.1, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 22, h: 36, r: 4 }
+  },
+
+  // --- MODELOS Samsung Clásicos ---
+  { 
+    id: 'samsung-s23-fe', 
+    name: 'Samsung Galaxy S23 FE', 
+    brand: 'Samsung',
     width: 76.5, 
+    height: 158.0, 
+    cornerRadius: 4,
+    camera: { x: 10, y: 10, w: 24, h: 36, r: 4 }
+  },
+
+  // --- SERIE Xiaomi 14 (2024) ---
+  { 
+    id: 'xiaomi-14', 
+    name: 'Xiaomi 14', 
+    brand: 'Xiaomi',
+    width: 71.5, 
+    height: 152.8, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 28, h: 28, r: 5 }
+  },
+  { 
+    id: 'xiaomi-14-ultra', 
+    name: 'Xiaomi 14 Ultra', 
+    brand: 'Xiaomi',
+    width: 75.5, 
+    height: 161.4, 
+    cornerRadius: 6,
+    camera: { x: 12, y: 12, w: 32, h: 40, r: 6 }
+  },
+
+  // --- SERIE Xiaomi 13 ---
+  { 
+    id: 'xiaomi-13', 
+    name: 'Xiaomi 13', 
+    brand: 'Xiaomi',
+    width: 71.5, 
+    height: 152.8, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 26, h: 26, r: 5 }
+  },
+  { 
+    id: 'xiaomi-13-pro', 
+    name: 'Xiaomi 13 Pro', 
+    brand: 'Xiaomi',
+    width: 74.6, 
+    height: 162.9, 
+    cornerRadius: 6,
+    camera: { x: 12, y: 12, w: 30, h: 36, r: 6 }
+  },
+
+  // --- SERIE Xiaomi Redmi Note ---
+  { 
+    id: 'xiaomi-redmi-note-13-pro', 
+    name: 'Xiaomi Redmi Note 13 Pro', 
+    brand: 'Xiaomi',
+    width: 74.2, 
+    height: 161.2, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 26, h: 38, r: 5 }
+  },
+  { 
+    id: 'xiaomi-redmi-note-13', 
+    name: 'Xiaomi Redmi Note 13', 
+    brand: 'Xiaomi',
+    width: 75.5, 
+    height: 162.3, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 24, h: 36, r: 5 }
+  },
+
+  // --- SERIE Xiaomi Poco ---
+  { 
+    id: 'xiaomi-poco-f6-pro', 
+    name: 'Xiaomi Poco F6 Pro', 
+    brand: 'Xiaomi',
+    width: 75.0, 
+    height: 160.9, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 28, h: 40, r: 5 }
+  },
+  { 
+    id: 'xiaomi-poco-x6-pro', 
+    name: 'Xiaomi Poco X6 Pro', 
+    brand: 'Xiaomi',
+    width: 74.5, 
+    height: 160.5, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 26, h: 38, r: 5 }
+  },
+
+  // --- SERIE Oppo Find X7 (2024) ---
+  { 
+    id: 'oppo-find-x7', 
+    name: 'Oppo Find X7', 
+    brand: 'Oppo',
+    width: 75.4, 
     height: 162.7, 
-    cornerRadius: 14,
-    camera: { x: 0, y: 12, w: 76.5, h: 28, r: 0 }
+    cornerRadius: 6,
+    camera: { x: 12, y: 12, w: 28, h: 44, r: 5 }
+  },
+  { 
+    id: 'oppo-find-x7-ultra', 
+    name: 'Oppo Find X7 Ultra', 
+    brand: 'Oppo',
+    width: 76.5, 
+    height: 164.3, 
+    cornerRadius: 6,
+    camera: { x: 12, y: 12, w: 30, h: 48, r: 6 }
+  },
+
+  // --- SERIE Oppo Reno ---
+  { 
+    id: 'oppo-reno-12-pro', 
+    name: 'Oppo Reno 12 Pro', 
+    brand: 'Oppo',
+    width: 74.8, 
+    height: 161.5, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 26, h: 40, r: 5 }
+  },
+  { 
+    id: 'oppo-reno-12', 
+    name: 'Oppo Reno 12', 
+    brand: 'Oppo',
+    width: 74.8, 
+    height: 162.4, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 24, h: 38, r: 5 }
+  },
+
+  // --- SERIE Oppo A ---
+  { 
+    id: 'oppo-a79', 
+    name: 'Oppo A79', 
+    brand: 'Oppo',
+    width: 76.0, 
+    height: 165.8, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 22, h: 36, r: 4 }
+  },
+  { 
+    id: 'oppo-a58', 
+    name: 'Oppo A58', 
+    brand: 'Oppo',
+    width: 76.0, 
+    height: 165.7, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 22, h: 36, r: 4 }
+  },
+
+  // --- SERIE Motorola Edge ---
+  { 
+    id: 'motorola-edge-50-pro', 
+    name: 'Motorola Edge 50 Pro', 
+    brand: 'Motorola',
+    width: 72.4, 
+    height: 161.1, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 28, h: 40, r: 5 }
+  },
+  { 
+    id: 'motorola-edge-50-ultra', 
+    name: 'Motorola Edge 50 Ultra', 
+    brand: 'Motorola',
+    width: 72.4, 
+    height: 161.1, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 30, h: 42, r: 5 }
+  },
+  { 
+    id: 'motorola-edge-50-fusion', 
+    name: 'Motorola Edge 50 Fusion', 
+    brand: 'Motorola',
+    width: 73.0, 
+    height: 161.9, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 24, h: 38, r: 5 }
+  },
+
+  // --- SERIE Motorola Moto G ---
+  { 
+    id: 'motorola-moto-g84', 
+    name: 'Motorola Moto G84', 
+    brand: 'Motorola',
+    width: 74.4, 
+    height: 160.0, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 22, h: 36, r: 4 }
+  },
+  { 
+    id: 'motorola-moto-g64', 
+    name: 'Motorola Moto G64', 
+    brand: 'Motorola',
+    width: 76.0, 
+    height: 161.6, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 22, h: 38, r: 4 }
+  },
+  { 
+    id: 'motorola-moto-g54', 
+    name: 'Motorola Moto G54', 
+    brand: 'Motorola',
+    width: 73.8, 
+    height: 161.6, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 22, h: 36, r: 4 }
   },
 
   // --- SERIE Google Pixel 9 (2024) ---
@@ -180,6 +514,26 @@ export const DEVICE_TEMPLATES: DeviceTemplate[] = [
     camera: { x: 0, y: 12, w: 76.5, h: 30, r: 0 }
   },
 
+  // --- SERIE Google Pixel 8 (2023) ---
+  { 
+    id: 'pixel-8', 
+    name: 'Google Pixel 8', 
+    brand: 'Google',
+    width: 70.8, 
+    height: 150.5, 
+    cornerRadius: 14,
+    camera: { x: 0, y: 15, w: 70.8, h: 25, r: 0 }
+  },
+  { 
+    id: 'pixel-8-pro', 
+    name: 'Google Pixel 8 Pro', 
+    brand: 'Google',
+    width: 76.5, 
+    height: 162.7, 
+    cornerRadius: 14,
+    camera: { x: 0, y: 12, w: 76.5, h: 28, r: 0 }
+  },
+
   // --- SERIE OnePlus 12 (2024) ---
   { 
     id: 'oneplus-12', 
@@ -189,26 +543,6 @@ export const DEVICE_TEMPLATES: DeviceTemplate[] = [
     height: 164.3, 
     cornerRadius: 6,
     camera: { x: 12, y: 12, w: 30, h: 50, r: 6 }
-  },
-
-  // --- SERIE Xiaomi 14 (2024) ---
-  { 
-    id: 'xiaomi-14', 
-    name: 'Xiaomi 14', 
-    brand: 'Xiaomi',
-    width: 71.5, 
-    height: 152.8, 
-    cornerRadius: 6,
-    camera: { x: 10, y: 10, w: 28, h: 28, r: 5 }
-  },
-  { 
-    id: 'xiaomi-14-ultra', 
-    name: 'Xiaomi 14 Ultra', 
-    brand: 'Xiaomi',
-    width: 75.5, 
-    height: 161.4, 
-    cornerRadius: 6,
-    camera: { x: 12, y: 12, w: 32, h: 40, r: 6 }
   },
 
   // --- SERIE Huawei P70 (2024) ---
@@ -231,26 +565,6 @@ export const DEVICE_TEMPLATES: DeviceTemplate[] = [
     camera: { x: 10, y: 10, w: 28, h: 42, r: 5 }
   },
 
-  // --- SERIE Oppo Find X7 (2024) ---
-  { 
-    id: 'oppo-find-x7', 
-    name: 'Oppo Find X7', 
-    brand: 'Oppo',
-    width: 75.4, 
-    height: 162.7, 
-    cornerRadius: 6,
-    camera: { x: 12, y: 12, w: 28, h: 44, r: 5 }
-  },
-  { 
-    id: 'oppo-find-x7-ultra', 
-    name: 'Oppo Find X7 Ultra', 
-    brand: 'Oppo',
-    width: 76.5, 
-    height: 164.3, 
-    cornerRadius: 6,
-    camera: { x: 12, y: 12, w: 30, h: 48, r: 6 }
-  },
-
   // --- SERIE Sony Xperia (2024) ---
   { 
     id: 'sony-xperia-1-v', 
@@ -271,34 +585,7 @@ export const DEVICE_TEMPLATES: DeviceTemplate[] = [
     camera: { x: 8, y: 8, w: 18, h: 36, r: 2 }
   },
 
-  // --- MODELOS clsICOS/OTROS ---
-  { 
-    id: 'iphone-se-2022', 
-    name: 'iPhone SE (2022)', 
-    brand: 'Apple',
-    width: 67.3, 
-    height: 138.4, 
-    cornerRadius: 8,
-    camera: { x: 30, y: 8, w: 8, h: 8, r: 4 }
-  },
-  { 
-    id: 'samsung-a55', 
-    name: 'Samsung Galaxy A55', 
-    brand: 'Samsung',
-    width: 77.4, 
-    height: 161.1, 
-    cornerRadius: 6,
-    camera: { x: 10, y: 10, w: 24, h: 38, r: 4 }
-  },
-  { 
-    id: 'samsung-s23-fe', 
-    name: 'Samsung Galaxy S23 FE', 
-    brand: 'Samsung',
-    width: 76.5, 
-    height: 158.0, 
-    cornerRadius: 4,
-    camera: { x: 10, y: 10, w: 24, h: 36, r: 4 }
-  },
+  // --- MODELOS OTROS ---
   { 
     id: 'nothing-phone-2a', 
     name: 'Nothing Phone 2a', 
@@ -308,7 +595,47 @@ export const DEVICE_TEMPLATES: DeviceTemplate[] = [
     cornerRadius: 6,
     camera: { x: 10, y: 10, w: 26, h: 40, r: 6 }
   },
+  { 
+    id: 'nothing-phone-2', 
+    name: 'Nothing Phone 2', 
+    brand: 'Nothing',
+    width: 76.5, 
+    height: 161.7, 
+    cornerRadius: 6,
+    camera: { x: 10, y: 10, w: 26, h: 40, r: 6 }
+  },
 ];
+
+// ============================================
+// CONFIGURACIÓN DE TEMAS
+// ============================================
+
+export const THEMES = {
+  dark: {
+    id: 'dark',
+    name: 'Oscuro',
+    bgPrimary: '#0a0a0a',
+    bgSecondary: '#171717',
+    bgTertiary: '#262626',
+    textPrimary: '#ffffff',
+    textSecondary: '#a3a3a3',
+    border: '#262626',
+  },
+  white: {
+    id: 'white',
+    name: 'Claro',
+    bgPrimary: '#f5f5f5',
+    bgSecondary: '#ffffff',
+    bgTertiary: '#e5e5e5',
+    textPrimary: '#171717',
+    textSecondary: '#525252',
+    border: '#e5e5e5',
+  },
+};
+
+export type ThemeId = 'dark' | 'white';
+
+export const DEFAULT_THEME: ThemeId = 'dark';
 
 // ============================================
 // CONFIGURACIÓN DE ESCALA

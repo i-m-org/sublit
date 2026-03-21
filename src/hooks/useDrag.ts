@@ -5,6 +5,7 @@ interface UseDragProps {
   image: HTMLImageElement | null;
   imageConfig: ImageConfig;
   setImageConfig: React.Dispatch<React.SetStateAction<ImageConfig>>;
+  onDragStart?: () => void;
 }
 
 interface UseDragReturn {
@@ -17,7 +18,8 @@ interface UseDragReturn {
 export const useDrag = ({ 
   image, 
   imageConfig, 
-  setImageConfig 
+  setImageConfig,
+  onDragStart 
 }: UseDragProps): UseDragReturn => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState<Position>({ x: 0, y: 0 });
@@ -30,7 +32,10 @@ export const useDrag = ({
       x: e.clientX - imageConfig.x, 
       y: e.clientY - imageConfig.y 
     });
-  }, [image, imageConfig.x, imageConfig.y]);
+    if (onDragStart) {
+      onDragStart();
+    }
+  }, [image, imageConfig.x, imageConfig.y, onDragStart]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging) return;
