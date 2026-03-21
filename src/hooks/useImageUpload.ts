@@ -57,6 +57,8 @@ export const useImageUpload = ({
           y: (selectedTemplate.height * pxPerMm) / 2 - (img.height * 0.1) / 2,
           scale: 0.1,
           rotation: 0,
+          flipH: false,
+          flipV: false,
         });
       };
       img.onerror = () => {
@@ -84,6 +86,8 @@ export const useImageUpload = ({
       y: (selectedTemplate.height * pxPerMm) / 2 - (image.height * 0.1) / 2,
       scale: 0.1,
       rotation: 0,
+      flipH: false,
+      flipV: false,
     });
   }, [image, selectedTemplate, pxPerMm]);
 

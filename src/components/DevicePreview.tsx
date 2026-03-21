@@ -50,7 +50,7 @@ export const DevicePreview: React.FC<DevicePreviewProps> = ({
         <div 
           className="absolute pointer-events-none origin-top-left"
           style={{
-            transform: `translate(${imageConfig.x}px, ${imageConfig.y}px) scale(${imageConfig.scale}) rotate(${imageConfig.rotation}deg)`,
+            transform: `translate(${imageConfig.x}px, ${imageConfig.y}px) scale(${imageConfig.scale}) rotate(${imageConfig.rotation}deg) scaleX(${imageConfig.flipH ? -1 : 1}) scaleY(${imageConfig.flipV ? -1 : 1})`,
           }}
         >
           <img 

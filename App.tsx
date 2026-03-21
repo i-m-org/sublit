@@ -3,7 +3,8 @@ import {
   Smartphone, 
   Download, 
   Upload, 
-  RotateCw,
+  FlipHorizontal,
+  FlipVertical,
   RefreshCcw,
   Settings2,
   AlertCircle,
@@ -120,18 +121,41 @@ const App: React.FC = () => {
     setImageConfig(prev => ({ ...prev, scale }));
   }, []);
 
-  // Rotar imagen - CORREGIDO: validar que existe imagen antes de rotar
-  const handleRotationChange = useCallback((increment: number) => {
+  // Voltear imagen horizontalmente
+  const handleFlipHorizontal = useCallback(() => {
     if (!image) {
-      setError('Sube una imagen primero antes de rotar');
+      setError('Sube una imagen primero');
       setTimeout(() => setError(null), 3000);
       return;
     }
     setImageConfig(prev => ({
       ...prev,
-      rotation: (prev.rotation + increment) % 360
+      flipH: !prev.flipH
     }));
   }, [image]);
+
+  // Voltear imagen verticalmente
+  const handleFlipVertical = useCallback(() => {
+    if (!image) {
+      setError('Sube una imagen primero');
+      setTimeout(() => setError(null), 3000);
+      return;
+    }
+    setImageConfig(prev => ({
+      ...prev,
+      flipV: !prev.flipV
+    }));
+  }, [image]);
+
+  // Resetear transforms (rotación y flips)
+  const handleResetTransforms = useCallback(() => {
+    setImageConfig(prev => ({
+      ...prev,
+      rotation: 0,
+      flipH: false,
+      flipV: false
+    }));
+  }, []);
 
   // Manejar carga de imagen
   const handleImageUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -313,27 +337,33 @@ const App: React.FC = () => {
                       theme={theme}
                     />
 
-                    {/* Botones de rotación */}
+                    {/* Botones de Voltear (Flip) */}
                     <div className="space-y-2">
                       <label className="text-xs font-medium flex items-center gap-2" style={{ color: themeStyles.textSecondary }}>
-                        <RotateCw size={14} /> Rotación
+                        <FlipHorizontal size={14} /> Voltear
                       </label>
                       <div className="flex gap-2">
                         <button
-                          onClick={() => handleRotationChange(-90)}
+                          onClick={handleFlipHorizontal}
                           className="flex-1 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2"
-                          style={{ backgroundColor: themeStyles.bgTertiary, color: themeStyles.textPrimary }}
+                          style={{ 
+                            backgroundColor: imageConfig.flipH ? '#3b82f6' : themeStyles.bgTertiary, 
+                            color: imageConfig.flipH ? '#ffffff' : themeStyles.textPrimary 
+                          }}
                         >
-                          <RotateCw size={16} className="rotate-180" />
-                          -90°
+                          <FlipHorizontal size={16} />
+                          Horizontal
                         </button>
                         <button
-                          onClick={() => handleRotationChange(90)}
+                          onClick={handleFlipVertical}
                           className="flex-1 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2"
-                          style={{ backgroundColor: themeStyles.bgTertiary, color: themeStyles.textPrimary }}
+                          style={{ 
+                            backgroundColor: imageConfig.flipV ? '#3b82f6' : themeStyles.bgTertiary, 
+                            color: imageConfig.flipV ? '#ffffff' : themeStyles.textPrimary 
+                          }}
                         >
-                          <RotateCw size={16} />
-                          +90°
+                          <FlipVertical size={16} />
+                          Vertical
                         </button>
                       </div>
                     </div>
@@ -341,7 +371,7 @@ const App: React.FC = () => {
                     {/* Reset y quitar */}
                     <div className="flex gap-2 pt-2 border-t" style={{ borderColor: themeStyles.border }}>
                       <button
-                        onClick={handleResetPosition}
+                        onClick={handleResetTransforms}
                         className="flex-1 py-2.5 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2"
                         style={{ backgroundColor: themeStyles.bgTertiary, color: themeStyles.textPrimary }}
                       >
