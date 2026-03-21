@@ -59,6 +59,8 @@ export const useImageUpload = ({
           rotation: 0,
           flipH: false,
           flipV: false,
+          focusX: 0,
+          focusY: 0,
         });
       };
       img.onerror = () => {
@@ -88,6 +90,8 @@ export const useImageUpload = ({
       rotation: 0,
       flipH: false,
       flipV: false,
+      focusX: 0,
+      focusY: 0,
     });
   }, [image, selectedTemplate, pxPerMm]);
 

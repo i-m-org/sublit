@@ -116,9 +116,41 @@ const App: React.FC = () => {
 
   // ---------- HANDLERS ----------
 
-  // Cambiar escala
-  const handleScaleChange = useCallback((scale: number) => {
-    setImageConfig(prev => ({ ...prev, scale }));
+  // Cambiar escala con punto de foco
+  const handleScaleChange = useCallback((newScale: number) => {
+    setImageConfig(prev => {
+      const oldScale = prev.scale;
+      const focusX = prev.focusX;
+      const focusY = prev.focusY;
+      
+      // Si no hay punto de foco establecido o es el inicial (0,0), usar comportamiento normal
+      if (focusX === 0 && focusY === 0) {
+        return { ...prev, scale: newScale };
+      }
+      
+      // Calcular nueva posición para zoom desde el punto de foco
+      // El punto de foco debe permanecer en la misma posición en pantalla
+      // nuevaX + focusX * newScale = oldX + focusX * oldScale
+      // nuevaX = oldX + focusX * (oldScale - newScale)
+      const newX = prev.x + focusX * (oldScale - newScale);
+      const newY = prev.y + focusY * (oldScale - newScale);
+      
+      return {
+        ...prev,
+        scale: newScale,
+        x: newX,
+        y: newY
+      };
+    });
+  }, []);
+
+  // Establecer punto de foco al hacer click en la imagen
+  const handleImageClick = useCallback((x: number, y: number) => {
+    setImageConfig(prev => ({
+      ...prev,
+      focusX: x,
+      focusY: y
+    }));
   }, []);
 
   // Voltear imagen horizontalmente
@@ -470,6 +502,7 @@ const App: React.FC = () => {
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
+            onImageClick={handleImageClick}
             theme={theme}
           />
 

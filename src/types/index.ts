@@ -27,6 +27,8 @@ export interface ImageConfig {
   rotation: number;
   flipH: boolean;
   flipV: boolean;
+  focusX: number;
+  focusY: number;
 }
 
 export interface ScaleConfig {

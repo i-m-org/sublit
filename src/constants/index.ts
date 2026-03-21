@@ -656,6 +656,8 @@ export const DEFAULT_IMAGE_CONFIG: ImageConfig = {
   rotation: 0,
   flipH: false,
   flipV: false,
+  focusX: 0,
+  focusY: 0,
 };
 
 // ============================================

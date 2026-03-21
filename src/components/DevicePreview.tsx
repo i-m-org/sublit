@@ -10,6 +10,7 @@ interface DevicePreviewProps {
   onMouseDown: (e: React.MouseEvent) => void;
   onMouseMove: (e: React.MouseEvent) => void;
   onMouseUp: () => void;
+  onImageClick?: (x: number, y: number) => void;
   theme?: ThemeId;
 }
 
@@ -21,6 +22,7 @@ export const DevicePreview: React.FC<DevicePreviewProps> = ({
   onMouseDown,
   onMouseMove,
   onMouseUp,
+  onImageClick,
   theme = 'dark',
 }) => {
   const { pxPerMm } = SCALE_CONFIG;
@@ -56,8 +58,16 @@ export const DevicePreview: React.FC<DevicePreviewProps> = ({
           <img 
             src={image.src} 
             alt="Diseño de sublimación" 
-            className="max-w-none shadow-sm"
+            className="max-w-none shadow-sm pointer-events-auto cursor-crosshair"
             draggable={false}
+            onClick={(e) => {
+              if (onImageClick) {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const clickX = (e.clientX - rect.left) / imageConfig.scale;
+                const clickY = (e.clientY - rect.top) / imageConfig.scale;
+                onImageClick(clickX, clickY);
+              }
+            }}
           />
         </div>
       )}
