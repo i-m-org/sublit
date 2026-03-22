@@ -61,53 +61,51 @@ export const generatePrintCanvas = ({ device, image, imageConfig }: ExportOption
 };
 
 // Genera canvas con preview (diseño + marco del dispositivo + hueco cámara)
+// Exporta a 300 PPI con medidas reales del modelo + 3mm de gracia
 export const generatePreviewCanvas = ({ device, image, imageConfig }: ExportOptions): HTMLCanvasElement => {
   const { pxPerMm } = SCALE_CONFIG;
   
-  // Usar escala de vista previa para mejor resolución
-  const scale = pxPerMm;
+  // 300 PPI = 11.81 px/mm
+  const PPI_300 = 11.81;
+  
+  // Añadir 3mm de gracia
+  const graceMm = 3;
+  
+  // Dimensiones totales con gracia (ancho + 2*gracia, alto + 2*gracia)
+  const totalWidthMm = device.width + graceMm * 2;
+  const totalHeightMm = device.height + graceMm * 2;
   
   const canvas = document.createElement('canvas');
-  // Añadir margen para el marco y efectos visuales
-  const margin = 40;
-  canvas.width = device.width * scale + margin * 2;
-  canvas.height = device.height * scale + margin * 2;
+  
+  // Canvas a 300 PPI con medidas reales + 3mm de gracia
+  canvas.width = Math.round(totalWidthMm * PPI_300);
+  canvas.height = Math.round(totalHeightMm * PPI_300);
 
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('No se pudo obtener el contexto 2D');
 
-  // Fondo transparente
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Dibujar fondo blanco de la placa (con margen)
+  // Fondo blanco
   ctx.fillStyle = '#ffffff';
-  ctx.beginPath();
-  const radius = device.cornerRadius * scale;
-  const x = margin;
-  const y = margin;
-  const w = device.width * scale;
-  const h = device.height * scale;
-  ctx.moveTo(x + radius, y);
-  ctx.lineTo(x + w - radius, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
-  ctx.lineTo(x + w, y + h - radius);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
-  ctx.lineTo(x + radius, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
-  ctx.lineTo(x, y + radius);
-  ctx.quadraticCurveTo(x, y, x + radius, y);
-  ctx.closePath();
-  ctx.fill();
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Dibujar diseño del usuario
+  // Calcular escala para dibujar en el canvas de 300 PPI
+  const scale = PPI_300;
+  const margin = graceMm * scale; // Margen de 3mm
+  
+  // Dibujar diseño del usuario centrado en el canvas
   if (image) {
     ctx.save();
     
     // Calcular centro de rotación
-    const imgWidth = image.width * imageConfig.scale;
-    const imgHeight = image.height * imageConfig.scale;
-    const centerX = (imageConfig.x + imgWidth / 2) + margin;
-    const centerY = (imageConfig.y + imgHeight / 2) + margin;
+    const imgWidth = image.width * imageConfig.scale * (scale / pxPerMm);
+    const imgHeight = image.height * imageConfig.scale * (scale / pxPerMm);
+    
+    // El diseño del usuario se dibuja en las coordenadas reales del dispositivo
+    // Relacionado al margen de gracia
+    const designX = imageConfig.x * scale + margin;
+    const designY = imageConfig.y * scale + margin;
+    const centerX = designX + imgWidth / 2;
+    const centerY = designY + imgHeight / 2;
     
     // Aplicar rotación
     ctx.translate(centerX, centerY);
@@ -124,8 +122,8 @@ export const generatePreviewCanvas = ({ device, image, imageConfig }: ExportOpti
     // Dibujar imagen
     ctx.drawImage(
       image, 
-      imageConfig.x + margin, 
-      imageConfig.y + margin,
+      designX, 
+      designY,
       imgWidth,
       imgHeight
     );
@@ -133,49 +131,28 @@ export const generatePreviewCanvas = ({ device, image, imageConfig }: ExportOpti
     ctx.restore();
   }
 
-  // Dibujar hueco de la cámara (círculo/rectángulo oscuro semitransparente)
-  const camX = device.camera.x * scale + margin;
-  const camY = device.camera.y * scale + margin;
-  const camW = device.camera.w * scale;
-  const camH = device.camera.h * scale;
-  const camR = device.camera.r * scale;
+  // Dibujar cámara (guía visual - zona sombreada)
+  // Variables necesarias para referencia futura:
+  // const camX = device.camera.x * scale + margin;
+  // const camY = device.camera.y * scale + margin;
+  // const camW = device.camera.w * scale;
+  // const camH = device.camera.h * scale;
+  // const camR = device.camera.r * scale;
   
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
-  ctx.beginPath();
-  if (camR > 0) {
-    // Rectángulo con bordes redondeados
-    ctx.moveTo(camX + camR, camY);
-    ctx.lineTo(camX + camW - camR, camY);
-    ctx.quadraticCurveTo(camX + camW, camY, camX + camW, camY + camR);
-    ctx.lineTo(camX + camW, camY + camH - camR);
-    ctx.quadraticCurveTo(camX + camW, camY + camH, camX + camW - camR, camY + camH);
-    ctx.lineTo(camX + camR, camY + camH);
-    ctx.quadraticCurveTo(camX, camY + camH, camX, camY + camH - camR);
-    ctx.lineTo(camX, camY + camR);
-    ctx.quadraticCurveTo(camX, camY, camX + camR, camY);
-  } else {
-    ctx.rect(camX, camY, camW, camH);
-  }
-  ctx.closePath();
-  ctx.fill();
-  
-  // Borde del hueco de cámara
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  // Dibujar brillo metálico (gradient overlay)
-  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-  gradient.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
-  gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
-  gradient.addColorStop(1, 'rgba(0, 0, 0, 0.1)');
-  ctx.fillStyle = gradient;
+  // Dibujar marca de agua con información
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Borde exterior sutil
-  ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  
+  // Borde exterior para indicar el área de corte
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(0, 0, canvas.width, canvas.height);
+  
+  // Línea de corte recomendada (a 3mm del borde)
+  ctx.strokeStyle = 'rgba(255, 0, 0, 0.15)';
+  ctx.setLineDash([5, 5]);
+  ctx.strokeRect(margin, margin, device.width * scale, device.height * scale);
+  ctx.setLineDash([]);
 
   return canvas;
 };

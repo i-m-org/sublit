@@ -19,11 +19,27 @@ import {
   Check
 } from 'lucide-react';
 
-import { DeviceButton, SliderControl, DevicePreview } from './src/components';
+import { SliderControl, DevicePreview } from './src/components';
 import { useImageUpload, useDrag } from './src/hooks';
 import { DeviceTemplate, ImageConfig } from './src/types';
 import { DEVICE_TEMPLATES, SCALE_CONFIG, DEFAULT_IMAGE_CONFIG, THEMES, ThemeId, DEFAULT_THEME } from './src/constants';
 import { exportDesign } from './src/utils/canvas';
+
+// Función para obtener el color del dispositivo basado en la marca
+const getDeviceColor = (device: DeviceTemplate): string => {
+  const brand = device.brand?.toLowerCase() || '';
+  if (brand.includes('apple') || brand.includes('iphone')) return '#007aff';
+  if (brand.includes('samsung') || brand.includes('galaxy')) return '#4285f4';
+  if (brand.includes('google') || brand.includes('pixel')) return '#34a853';
+  if (brand.includes('xiaomi') || brand.includes('redmi') || brand.includes('poco')) return '#ff6900';
+  if (brand.includes('huawei')) return '#e53935';
+  if (brand.includes('oneplus')) return '#f44336';
+  if (brand.includes('oppo') || brand.includes('realme')) return '#00c853';
+  if (brand.includes('sony')) return '#0066ff';
+  if (brand.includes('motorola')) return '#512da8';
+  if (brand.includes('nothing')) return '#000000';
+  return '#6b7280'; // gray 500 por defecto
+};
 
 const STORAGE_KEY = 'sublimetal-pro-state';
 
@@ -344,7 +360,7 @@ const App: React.FC = () => {
                     <div className="flex items-center gap-3">
                       <div 
                         className="w-10 h-10 rounded-lg flex items-center justify-center"
-                        style={{ backgroundColor: selectedTemplate.color }}
+                        style={{ backgroundColor: getDeviceColor(selectedTemplate) }}
                       >
                         <Smartphone size={18} className="text-white" />
                       </div>
@@ -364,7 +380,7 @@ const App: React.FC = () => {
                   {/* Lista desplegable */}
                   {isDeviceDropdownOpen && (
                     <div 
-                      className="absolute z-50 w-full mt-2 py-2 rounded-xl border shadow-lg max-h-[280px] overflow-y-auto"
+                      className="absolute z-50 w-full mt-2 py-2 rounded-xl border shadow-lg max-h-[500px] overflow-y-auto"
                       style={{ 
                         backgroundColor: themeStyles.bgSecondary, 
                         borderColor: themeStyles.border 
@@ -380,7 +396,7 @@ const App: React.FC = () => {
                         >
                           <div 
                             className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                            style={{ backgroundColor: t.color }}
+                            style={{ backgroundColor: getDeviceColor(t) }}
                           >
                             <Smartphone size={14} className="text-white" />
                           </div>
