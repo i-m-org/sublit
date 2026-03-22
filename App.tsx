@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { 
   Smartphone, 
-  Download, 
   Upload, 
   FlipHorizontal,
   FlipVertical,
@@ -19,7 +18,6 @@ import {
 
 import { DeviceButton, SliderControl, DevicePreview } from './src/components';
 import { useImageUpload, useDrag } from './src/hooks';
-import { exportDesign } from './src/utils/canvas';
 import { DeviceTemplate, ImageConfig } from './src/types';
 import { DEVICE_TEMPLATES, SCALE_CONFIG, DEFAULT_IMAGE_CONFIG, THEMES, ThemeId, DEFAULT_THEME } from './src/constants';
 
@@ -57,7 +55,7 @@ const App: React.FC = () => {
   // Estado para saber si la imagen ha sido movida por el usuario
   const [hasUserMovedImage, setHasUserMovedImage] = useState(false);
 
-  const { pxPerMm, minScale, maxScale, scaleStep } = SCALE_CONFIG;
+  const { minScale, maxScale, scaleStep } = SCALE_CONFIG;
   const currentTheme = THEMES[theme];
 
   // ---------- CARGAR ESTADO DESDE LOCALSTORAGE ----------
@@ -96,7 +94,6 @@ const App: React.FC = () => {
     fileInputRef,
     handleImageUpload: processImageUpload,
     handleRemoveImage,
-    handleResetPosition,
   } = useImageUpload({
     selectedTemplate,
     onError: setError,
@@ -130,8 +127,10 @@ const App: React.FC = () => {
       
       // Calcular nueva posición para zoom desde el punto de foco
       // El punto de foco debe permanecer en la misma posición en pantalla
-      // nuevaX + focusX * newScale = oldX + focusX * oldScale
-      // nuevaX = oldX + focusX * (oldScale - newScale)
+      // La fórmula correcta para mantener el punto de foco en su lugar es:
+      // nuevaPosición = posiciónOriginalDelFocoEnPantalla - nuevaEscala * posiciónOriginalDelFocoEnImagen
+      // oldX + focusX * oldScale = newX + focusX * newScale
+      // newX = oldX + focusX * (oldScale - newScale)
       const newX = prev.x + focusX * (oldScale - newScale);
       const newY = prev.y + focusY * (oldScale - newScale);
       
@@ -218,19 +217,6 @@ const App: React.FC = () => {
     setIsPanelOpen(prev => !prev);
   }, []);
 
-  // Exportar diseño
-  const handleExport = useCallback(() => {
-    exportDesign({
-      device: selectedTemplate,
-      image,
-      imageConfig,
-    });
-  }, [selectedTemplate, image, imageConfig]);
-
-  // Dimensiones del dispositivo
-  const deviceWidth = selectedTemplate.width * pxPerMm;
-  const deviceHeight = selectedTemplate.height * pxPerMm;
-
   // Estilos dinámicos basados en tema
   const themeStyles = {
     bgPrimary: currentTheme.bgPrimary,
@@ -287,14 +273,7 @@ const App: React.FC = () => {
             <Upload size={18} /> 
             <span className="hidden sm:inline">SUBIR DISEÑO</span>
           </button>
-          <button 
-            onClick={handleExport}
-            disabled={!image}
-            className="bg-blue-600 text-white font-semibold px-5 py-2.5 rounded-full hover:bg-blue-500 transition-colors flex items-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Download size={18} /> 
-            <span className="hidden sm:inline">EXPORTAR</span>
-          </button>
+
         </div>
       </header>
 
@@ -503,7 +482,6 @@ const App: React.FC = () => {
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onImageClick={handleImageClick}
-            theme={theme}
           />
 
           {/* Información del dispositivo */}

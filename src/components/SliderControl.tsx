@@ -1,5 +1,5 @@
 import React from 'react';
-import { Maximize2 } from 'lucide-react';
+import { Maximize2, LucideIcon } from 'lucide-react';
 import { ThemeId } from '../types';
 
 interface SliderControlProps {
@@ -9,7 +9,7 @@ interface SliderControlProps {
   max: number;
   step: number;
   onChange: (value: number) => void;
-  icon?: React.ComponentType<{ size?: number }>;
+  icon?: LucideIcon;
   formatValue?: (value: number) => string;
   theme?: ThemeId;
 }

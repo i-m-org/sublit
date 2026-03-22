@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeviceTemplate, ImageConfig, ThemeId } from '../types';
+import { DeviceTemplate, ImageConfig } from '../types';
 import { SCALE_CONFIG } from '../constants';
 
 interface DevicePreviewProps {
@@ -11,7 +11,6 @@ interface DevicePreviewProps {
   onMouseMove: (e: React.MouseEvent) => void;
   onMouseUp: () => void;
   onImageClick?: (x: number, y: number) => void;
-  theme?: ThemeId;
 }
 
 export const DevicePreview: React.FC<DevicePreviewProps> = ({
@@ -23,7 +22,6 @@ export const DevicePreview: React.FC<DevicePreviewProps> = ({
   onMouseMove,
   onMouseUp,
   onImageClick,
-  theme = 'dark',
 }) => {
   const { pxPerMm } = SCALE_CONFIG;
   const deviceWidth = device.width * pxPerMm;
@@ -63,9 +61,35 @@ export const DevicePreview: React.FC<DevicePreviewProps> = ({
             onClick={(e) => {
               if (onImageClick) {
                 const rect = e.currentTarget.getBoundingClientRect();
-                const clickX = (e.clientX - rect.left) / imageConfig.scale;
-                const clickY = (e.clientY - rect.top) / imageConfig.scale;
-                onImageClick(clickX, clickY);
+                // Calcular posición del clic relativa a la imagen dibujada
+                // Primero obtenemos la posición del clic en pixels del canvas
+                const clickXRaw = e.clientX - rect.left;
+                const clickYRaw = e.clientY - rect.top;
+                
+                // Convertir a coordenadas de la imagen considerando transformaciones
+                // La imagen está en: translate(x, y) scale(scale) rotate(rotation)
+                // Necesitamos invertir esta transformación
+                const imgWidth = image.width * imageConfig.scale;
+                const imgHeight = image.height * imageConfig.scale;
+                
+                // Calcular el centro de la imagen
+                const centerX = imageConfig.x + imgWidth / 2;
+                const centerY = imageConfig.y + imgHeight / 2;
+                
+                // Coordenadas relativas al centro de la imagen
+                const relX = clickXRaw - centerX;
+                const relY = clickYRaw - centerY;
+                
+                // Aplicar rotación inversa para obtener coordenadas en el espacio de la imagen
+                const angleRad = -imageConfig.rotation * Math.PI / 180;
+                const rotatedX = relX * Math.cos(angleRad) - relY * Math.sin(angleRad);
+                const rotatedY = relX * Math.sin(angleRad) + relY * Math.cos(angleRad);
+                
+                // Centrar en la imagen original y convertir a coordenadas de la imagen sin escala
+                const focusX = (rotatedX / imageConfig.scale) + (image.width / 2);
+                const focusY = (rotatedY / imageConfig.scale) + (image.height / 2);
+                
+                onImageClick(focusX, focusY);
               }
             }}
           />
