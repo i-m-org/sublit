@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { 
-  Smartphone, 
-  Upload, 
+import {
+  Smartphone,
+  Upload,
   FlipHorizontal,
   FlipVertical,
   RefreshCcw,
@@ -13,13 +13,15 @@ import {
   PanelLeft,
   Moon,
   Sun,
-  Move
+  Move,
+  Download
 } from 'lucide-react';
 
 import { DeviceButton, SliderControl, DevicePreview } from './src/components';
 import { useImageUpload, useDrag } from './src/hooks';
 import { DeviceTemplate, ImageConfig } from './src/types';
 import { DEVICE_TEMPLATES, SCALE_CONFIG, DEFAULT_IMAGE_CONFIG, THEMES, ThemeId, DEFAULT_THEME } from './src/constants';
+import { exportDesign } from './src/utils/canvas';
 
 const STORAGE_KEY = 'sublimetal-pro-state';
 
@@ -217,6 +219,16 @@ const App: React.FC = () => {
     setIsPanelOpen(prev => !prev);
   }, []);
 
+  // Exportar imagen
+  const handleExport = useCallback(() => {
+    if (!image) {
+      setError('Sube una imagen primero');
+      setTimeout(() => setError(null), 3000);
+      return;
+    }
+    exportDesign({ device: selectedTemplate, image, imageConfig });
+  }, [image, selectedTemplate, imageConfig]);
+
   // Estilos dinámicos basados en tema
   const themeStyles = {
     bgPrimary: currentTheme.bgPrimary,
@@ -272,6 +284,16 @@ const App: React.FC = () => {
           >
             <Upload size={18} /> 
             <span className="hidden sm:inline">SUBIR DISEÑO</span>
+          </button>
+
+          <button 
+            onClick={handleExport}
+            disabled={!image}
+            className="bg-blue-500 text-white font-semibold px-5 py-2.5 rounded-full hover:bg-blue-600 transition-colors flex items-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            title={!image ? 'Sube una imagen primero' : 'Exportar diseño'}
+          >
+            <Download size={18} />
+            <span className="hidden sm:inline">EXPORTAR</span>
           </button>
 
         </div>
