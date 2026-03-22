@@ -14,7 +14,9 @@ import {
   Moon,
   Sun,
   Move,
-  Download
+  Download,
+  ChevronDown,
+  Check
 } from 'lucide-react';
 
 import { DeviceButton, SliderControl, DevicePreview } from './src/components';
@@ -39,6 +41,9 @@ const App: React.FC = () => {
   
   // Estado para menú colapsable
   const [isPanelOpen, setIsPanelOpen] = useState(true);
+  
+  // Estado para dropdown de dispositivos
+  const [isDeviceDropdownOpen, setIsDeviceDropdownOpen] = useState(false);
   
   // Estado para tema
   const [theme, setTheme] = useState<ThemeId>(() => {
@@ -207,6 +212,7 @@ const App: React.FC = () => {
   // Cambiar dispositivo
   const handleDeviceChange = useCallback((template: DeviceTemplate) => {
     setSelectedTemplate(template);
+    setIsDeviceDropdownOpen(false);
   }, []);
 
   // Cambiar tema
@@ -323,16 +329,74 @@ const App: React.FC = () => {
                 <h3 className="text-xs font-bold mb-4 uppercase tracking-widest flex items-center gap-2" style={{ color: themeStyles.textSecondary }}>
                   <Smartphone size={16} /> Seleccionar Placa
                 </h3>
-                <div className="grid grid-cols-1 gap-2 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin">
-                  {DEVICE_TEMPLATES.map(t => (
-                    <DeviceButton 
-                      key={t.id} 
-                      device={t}
-                      isSelected={selectedTemplate.id === t.id}
-                      onClick={() => handleDeviceChange(t)}
-                      theme={theme}
+                
+                {/* Dropdown de dispositivos */}
+                <div className="relative">
+                  <button
+                    onClick={() => setIsDeviceDropdownOpen(!isDeviceDropdownOpen)}
+                    className="w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl border transition-colors"
+                    style={{ 
+                      backgroundColor: themeStyles.bgTertiary, 
+                      borderColor: themeStyles.border,
+                      color: themeStyles.textPrimary 
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: selectedTemplate.color }}
+                      >
+                        <Smartphone size={18} className="text-white" />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-medium">{selectedTemplate.name}</p>
+                        <p className="text-xs" style={{ color: themeStyles.textSecondary }}>
+                          {selectedTemplate.width}×{selectedTemplate.height}mm
+                        </p>
+                      </div>
+                    </div>
+                    <ChevronDown 
+                      size={18} 
+                      className={`transition-transform duration-200 ${isDeviceDropdownOpen ? 'rotate-180' : ''}`}
                     />
-                  ))}
+                  </button>
+                  
+                  {/* Lista desplegable */}
+                  {isDeviceDropdownOpen && (
+                    <div 
+                      className="absolute z-50 w-full mt-2 py-2 rounded-xl border shadow-lg max-h-[280px] overflow-y-auto"
+                      style={{ 
+                        backgroundColor: themeStyles.bgSecondary, 
+                        borderColor: themeStyles.border 
+                      }}
+                    >
+                      {DEVICE_TEMPLATES.map(t => (
+                        <button
+                          key={t.id}
+                          onClick={() => handleDeviceChange(t)}
+                          className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-opacity-50 transition-colors ${
+                            selectedTemplate.id === t.id ? 'bg-blue-500/10' : ''
+                          }`}
+                        >
+                          <div 
+                            className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                            style={{ backgroundColor: t.color }}
+                          >
+                            <Smartphone size={14} className="text-white" />
+                          </div>
+                          <div className="flex-1 text-left">
+                            <p className="text-sm font-medium">{t.name}</p>
+                            <p className="text-xs" style={{ color: themeStyles.textSecondary }}>
+                              {t.width}×{t.height}mm
+                            </p>
+                          </div>
+                          {selectedTemplate.id === t.id && (
+                            <Check size={16} className="text-blue-500" />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
